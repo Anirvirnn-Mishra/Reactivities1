@@ -14,7 +14,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             /// checking the db exists or not
             var host=CreateHostBuilder(args).Build();
@@ -23,11 +23,11 @@ namespace API
             try
             {
                 var context= services.GetRequiredService<DataContext>();
-                if(context.Database.EnsureCreated())
-                {
-                    context.Database.Migrate();
-                }
+                context.Database.Migrate();
                 
+                await Seed.SeedData(context);
+
+
 
             }
             catch (Exception ex)
