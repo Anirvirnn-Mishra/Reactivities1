@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Persistence.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +16,31 @@ namespace API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            /// checking the db exists or not
+            var host=CreateHostBuilder(args).Build();
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context= services.GetRequiredService<DataContext>();
+                if(context.Database.EnsureCreated())
+                {
+                    context.Database.Migrate();
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+
+                ILogger logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "an error occoured while migrating");    
+            }
+            finally
+            {
+                host.Run();
+
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
