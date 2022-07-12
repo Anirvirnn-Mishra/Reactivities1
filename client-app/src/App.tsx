@@ -26,7 +26,7 @@ useEffect(
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <ul>{activities.map(
+      <ul>{activities.map(
           (data:any)=>(<li key={data.id}>{data.title}</li>)
           )}</ul>        
       </header>
