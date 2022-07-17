@@ -9,7 +9,7 @@ const [activities,setActivities ]=useState<IActivity[]>([]);
 useEffect(
   ()=>
   {
-    axios.get("https:localhost:5001/api/activities").then
+    axios.get<IActivity[]>("https:localhost:5001/api/activities").then
     (
       response=>
       {
