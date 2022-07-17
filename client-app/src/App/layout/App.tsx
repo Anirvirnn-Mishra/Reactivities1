@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Header, List, ListItem } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
+import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
 
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
@@ -29,9 +30,7 @@ useEffect(
     <Fragment > 
   <NavBar/>
   <Container style={{marginTop: "10em"}}>
-  <List >{activities.map(
-          (data)=>(<List.Item  key={data.id}>{data.title} </List.Item>)
-          )}</List>       
+  <ActivityDashboard activities={activities} />
   </Container>
       
   
