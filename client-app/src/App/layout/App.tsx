@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './styles.css';
 import axios from 'axios';
 import { Header, List, ListItem } from 'semantic-ui-react';
+import { IActivity } from '../models/activity';
 
 function App() {
-const [activities,setActivities ]=useState([]);
+const [activities,setActivities ]=useState<IActivity[]>([]);
 useEffect(
   ()=>
   {
@@ -27,7 +28,7 @@ useEffect(
      <Header as="h2" icon='users' content="Reactivities" />
       
       <List >{activities.map(
-          (data:any)=>(<List.Item  key={data.id}>{data.title} </List.Item>)
+          (data)=>(<List.Item  key={data.id}>{data.title} </List.Item>)
           )}</List>        
   
     </div>
