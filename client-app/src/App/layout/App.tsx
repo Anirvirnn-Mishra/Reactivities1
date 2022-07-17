@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './styles.css';
 import axios from 'axios';
-import { Header, List, ListItem } from 'semantic-ui-react';
+import { Container, Header, List, ListItem } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 
@@ -25,13 +25,17 @@ useEffect(
 );
 
   return (
-    <div >
+    // can also use <> instead of fragment
+    <Fragment > 
   <NavBar/>
-      <List >{activities.map(
+  <Container style={{marginTop: "10em"}}>
+  <List >{activities.map(
           (data)=>(<List.Item  key={data.id}>{data.title} </List.Item>)
-          )}</List>        
+          )}</List>       
+  </Container>
+      
   
-    </div>
+    </Fragment>
     
   );
 }
