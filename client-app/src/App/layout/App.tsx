@@ -8,6 +8,17 @@ import ActivityDashboard from '../features/activities/dashboard/ActivityDashboar
 
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
+const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
+function handleSelectActivity(id :string)
+{
+  setSelectedActivity(activities.find(c=>c.id===id));
+
+}
+function handleCancelSelectActivity()
+{ 
+  setSelectedActivity(undefined);
+
+}
 useEffect(
   ()=>
   {
@@ -30,7 +41,11 @@ useEffect(
     <Fragment > 
   <NavBar/>
   <Container style={{marginTop: "10em"}}>
-  <ActivityDashboard activities={activities} />
+  <ActivityDashboard
+    activities={activities}
+    selectedActivity={selectedActivity}
+    selectActivity={handleSelectActivity}
+    cancelSelectActivity={handleCancelSelectActivity}/>
   </Container>
       
   
