@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './styles.css';
 import axios from 'axios';
-import { Container, Header, List, ListItem } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
@@ -9,6 +9,7 @@ import ActivityDashboard from '../features/activities/dashboard/ActivityDashboar
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
 const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
+const [editMode,setEditMode]=useState(false);
 function handleSelectActivity(id :string)
 {
   setSelectedActivity(activities.find(c=>c.id===id));
@@ -18,6 +19,18 @@ function handleCancelSelectActivity()
 { 
   setSelectedActivity(undefined);
 
+}
+
+// form
+function  handleFormOpen(id?:string)
+{
+id?handleSelectActivity(id):handleCancelSelectActivity(); 
+setEditMode(true);
+
+}
+function handleFormClose()
+{
+  setEditMode(false);
 }
 useEffect(
   ()=>
@@ -39,13 +52,17 @@ useEffect(
   return (
     // can also use <> instead of fragment
     <Fragment > 
-  <NavBar/>
+  <NavBar openForm={handleFormOpen} />
   <Container style={{marginTop: "10em"}}>
   <ActivityDashboard
     activities={activities}
     selectedActivity={selectedActivity}
     selectActivity={handleSelectActivity}
-    cancelSelectActivity={handleCancelSelectActivity}/>
+    cancelSelectActivity={handleCancelSelectActivity}
+    editMode={editMode}
+    openForm={handleFormOpen}
+    closeForm={handleFormClose}
+    />
   </Container>
       
   
