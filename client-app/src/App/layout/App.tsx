@@ -40,6 +40,12 @@ setActivities([...activities,{...activity,id:uuid()}]);
 setEditMode(false);
 setSelectedActivity(activity);
 }
+function handleDeleteActivity(id:string)
+{
+  setActivities([...activities.filter(x=>x.id!==id)]); 
+
+}
+
 useEffect(
   ()=>
   {
@@ -71,6 +77,7 @@ useEffect(
     openForm={handleFormOpen}
     closeForm={handleFormClose}
     CreateOrEdit={handleCreateOrEditActivity}
+    DeleteActivity={handleDeleteActivity}
     />
   </Container>
       
