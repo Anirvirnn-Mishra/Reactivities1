@@ -32,6 +32,13 @@ function handleFormClose()
 {
   setEditMode(false);
 }
+function handleCreateOrEditActivity(activity:IActivity)
+{
+activity.id?setActivities([...activities.filter(c=>c.id!==activity.id),activity]):
+setActivities([...activities,activity]);
+setEditMode(false);
+setSelectedActivity(activity);
+}
 useEffect(
   ()=>
   {
@@ -39,7 +46,7 @@ useEffect(
     (
       response=>
       {
-        console.log(response.data);
+        
         setActivities(response.data);
 
       }
@@ -62,6 +69,7 @@ useEffect(
     editMode={editMode}
     openForm={handleFormOpen}
     closeForm={handleFormClose}
+    CreateOrEdit={handleCreateOrEditActivity}
     />
   </Container>
       

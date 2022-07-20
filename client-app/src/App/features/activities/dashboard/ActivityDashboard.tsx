@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, List } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
@@ -12,9 +12,10 @@ interface Props{
     cancelSelectActivity:()=>void;
     editMode:boolean;
     openForm:(id:string)=>void;
-    closeForm:()=>void
+    closeForm:()=>void;
+    CreateOrEdit:(activity:IActivity)=>void;
 }
-export default function ActivityDashboard({activities,selectActivity,selectedActivity,cancelSelectActivity,editMode,openForm,closeForm}:Props )
+export default function ActivityDashboard({activities,selectActivity,selectedActivity,cancelSelectActivity,editMode,openForm,closeForm,CreateOrEdit}:Props )
 
 {
     return (
@@ -32,7 +33,9 @@ export default function ActivityDashboard({activities,selectActivity,selectedAct
                      />}       
                  {editMode
                  &&
-                    <ActivityForm closeForm={closeForm} activity={selectedActivity}/>}
+                    <ActivityForm closeForm={closeForm} activity={selectedActivity} 
+                CreateOrEdit={CreateOrEdit} 
+                    />}
 
             </Grid.Column>
         </Grid>
