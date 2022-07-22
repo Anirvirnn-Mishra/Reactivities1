@@ -37,7 +37,7 @@ export default function ActivityForm({activity:selectedActivity,closeForm,Create
                 <input  name="title" value={activity.title} onChange={handleInputChange} placeholder="title"  />
                 <textarea  placeholder="description" name="description" value={activity.description}  onChange={handleInputChange} />
                 <input type='text' placeholder="category" name="category" value={activity.category}  onChange={handleInputChange} />
-                <input   type='text'  placeholder="date"  name="date" value={activity.date} onChange={handleInputChange} />
+                <input   type='date'  placeholder="date"  name="date" value={activity.date} onChange={handleInputChange} />
                 <input   type='text' placeholder='city'   name='city' value={activity.city}   onChange={handleInputChange}/>
                 <input   type='text' placeholder='venue'  name='venue' value={activity.venue}  onChange={handleInputChange} />
                 
