@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './styles.css';
-import axios from 'axios';
+
 import { Container } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
 import {v4 as uuid} from 'uuid';
+import agent from '../api/agent';
 
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
@@ -49,12 +50,12 @@ function handleDeleteActivity(id:string)
 useEffect(
   ()=>
   {
-    axios.get<IActivity[]>("https:localhost:5001/api/activities").then
+   agent.Activities.list().then
     (
       response=>
       {
         
-        setActivities(response.data);
+        setActivities(response);
 
       }
     );
