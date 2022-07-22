@@ -1,9 +1,27 @@
 // all req going to api
 import axios, { AxiosResponse } from "axios";
-import { ModalActions } from "semantic-ui-react";
 import { IActivity } from "../models/activity";
 
+const sleep=(delay:number)=>{
+    return new Promise((resolve)=>{setTimeout(resolve,delay)});
+}
 axios.defaults.baseURL="https:localhost:5001/api/";
+axios.interceptors.response.use(
+    async response =>
+     {
+         try {
+            await sleep(10000);
+            return response;
+        } catch (error) {
+            console.error(error);
+            return await Promise.reject(error);
+        }
+            
+        }
+        );
+    
+
+    
 const responseBody= <T> (response:AxiosResponse<T>)=>response.data;
  
 const requests={
