@@ -8,11 +8,13 @@ import ActivityDashboard from '../features/activities/dashboard/ActivityDashboar
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import { act } from 'react-dom/test-utils';
+import LoadingComponent from './LoadingComponents';
 
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
 const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
 const [editMode,setEditMode]=useState(false);
+const[loading,setLoading]=useState(true);
 function handleSelectActivity(id :string)
 {
   setSelectedActivity(activities.find(c=>c.id===id));
@@ -64,6 +66,7 @@ useEffect(
           );
         
         setActivities(activities); 
+        setLoading(false);
 
       }
     );
@@ -71,6 +74,7 @@ useEffect(
   } ,
   []
 );
+if(loading) return <LoadingComponent content='Loading App' />
 
   return (
     // can also use <> instead of fragment
