@@ -6,8 +6,9 @@ interface Props{
     activities:IActivity[];
     selectActivity:(id:string)=>void;
     DeleteActivity:(id:string)=>void;
+    submitting:boolean
 }
-export default function ActivityList({activities,selectActivity,DeleteActivity}:Props)
+export default function ActivityList({activities,selectActivity,DeleteActivity,submitting}:Props)
 {
     return (
         <Segment>
@@ -25,7 +26,7 @@ export default function ActivityList({activities,selectActivity,DeleteActivity}:
                                     </Item.Description>
                                     <Item.Extra>
                                         <Button onClick={()=>selectActivity(activity.id)} floated="right" content='View' color='blue'/>
-                                        <Button onClick={()=>DeleteActivity(activity.id)} floated="right" content='Delete' color='red'/>
+                                        <Button loading={submitting} onClick={()=>DeleteActivity(activity.id)} floated="right" content='Delete' color='red'/>
                                         <Label basic content={activity.category} />
                                     </Item.Extra>
 
