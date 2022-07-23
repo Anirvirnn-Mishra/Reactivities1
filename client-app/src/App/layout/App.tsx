@@ -8,9 +8,11 @@ import ActivityDashboard from '../features/activities/dashboard/ActivityDashboar
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
+import {  useStore } from '../stores/store';
 // without mobx
 
 function App() {
+   const {activityStore}=useStore();
 const [activities,setActivities ]=useState<IActivity[]>([]);
 const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
 const [editMode,setEditMode]=useState(false);
@@ -109,8 +111,10 @@ if(loading) return <LoadingComponent content='Loading App' />
   return (
     // can also use <> instead of fragment
     <Fragment > 
+
   <NavBar openForm={handleFormOpen} />
   <Container style={{marginTop: "10em"}}>
+    <h2>{activityStore.title}</h2>
   <ActivityDashboard
     activities={activities}
     selectedActivity={selectedActivity}
