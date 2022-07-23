@@ -7,8 +7,8 @@ import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
-import { act } from 'react-dom/test-utils';
 import LoadingComponent from './LoadingComponents';
+// without mobx
 
 function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
