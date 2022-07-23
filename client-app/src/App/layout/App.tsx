@@ -15,6 +15,8 @@ const [activities,setActivities ]=useState<IActivity[]>([]);
 const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
 const [editMode,setEditMode]=useState(false);
 const[loading,setLoading]=useState(true);
+const [submitting,setSubmitting]=useState(false);
+
 function handleSelectActivity(id :string)
 {
   setSelectedActivity(activities.find(c=>c.id===id));
@@ -39,10 +41,36 @@ function handleFormClose()
 }
 function handleCreateOrEditActivity(activity:IActivity)
 {
-activity.id?setActivities([...activities.filter(c=>c.id!==activity.id),activity]):
-setActivities([...activities,{...activity,id:uuid()}]);
-setEditMode(false);
-setSelectedActivity(activity);
+  setSubmitting(true);
+  if(activity.id)
+  {
+    agent.Activities.update(activity).then
+    (()=>
+      {
+        setActivities([...activities.filter(c=>c.id!==activity.id),activity]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+        setSubmitting(false);
+      }
+    );
+  }
+  else
+  {
+    activity.id=uuid();
+    agent.Activities.create(activity).then(
+      ()=>
+      {
+        setActivities([...activities,activity]);
+        setSelectedActivity(activity);
+        setEditMode(false);
+        setSubmitting(false);
+    }
+    );
+  }
+// activity.id?setActivities([...activities.filter(c=>c.id!==activity.id),activity]):
+// setActivities([...activities,{...activity,id:uuid()}]);
+// setEditMode(false);
+// setSelectedActivity(activity);
 }
 function handleDeleteActivity(id:string)
 {
@@ -91,6 +119,7 @@ if(loading) return <LoadingComponent content='Loading App' />
     closeForm={handleFormClose}
     CreateOrEdit={handleCreateOrEditActivity}
     DeleteActivity={handleDeleteActivity}
+    submitting={submitting}
     />
   </Container>
       

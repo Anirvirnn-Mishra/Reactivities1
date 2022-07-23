@@ -29,12 +29,16 @@ const requests={
     post:<T>(url:string,body:{})=>axios.post<T>(url,body).then(responseBody),
     del:<T>(url:string)=>axios.delete<T>(url).then(responseBody),
     put:<T>(url:string,body:{})=>axios.put<T>(url,body).then(responseBody)     
-
 }
 
 const Activities=
 {
-list:()=>requests.get<IActivity[]>('Activities')
+list:()=>requests.get<IActivity[]>('Activities'),
+details:(id:string)=>requests.get<IActivity>(`activities/${id}`),
+create:(activity:IActivity)=>axios.post<void>('activities',activity),
+update:(activity:IActivity)=>axios.put<void>(`activities/${activity.id}`,activity),
+delete:(id:string)=>axios.delete<void>(`activities/${id}`)
+
 }
 
 const agent={
