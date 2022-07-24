@@ -15,10 +15,9 @@ export default class ActivityStore
     }
     loadActivities=async ()=>
     {
-        this.loadingInitial=true;
+        this.SetloadingInitial(true);
         try{
             const activities= await agent.Activities.list();
-            runInAction(()=>{
 
                 activities.forEach(activity=>
                     {
@@ -27,21 +26,22 @@ export default class ActivityStore
                     }
       
                     );
-            });
-              this.loadingInitial=false;
-        
+                    this.SetloadingInitial(false);
             
 
 
         }
         catch(error){
             console.error(error);
-            this.loadingInitial=false;
-runInAction(()=>{
-    this.loadingInitial=false;
-
-})
+    this.SetloadingInitial(false);
             
         }
+    }
+
+
+
+    
+     SetloadingInitial=(state:boolean)=>{
+        this.loadingInitial=state;
     }
 }
