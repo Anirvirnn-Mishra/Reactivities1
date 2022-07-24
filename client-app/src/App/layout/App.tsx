@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './styles.css';
 
-import { Container } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
@@ -9,6 +9,7 @@ import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
 import {  useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 // without mobx
 
 function App() {
@@ -115,6 +116,8 @@ if(loading) return <LoadingComponent content='Loading App' />
   <NavBar openForm={handleFormOpen} />
   <Container style={{marginTop: "10em"}}>
     <h2>{activityStore.title}</h2>
+    {/* // to make the below observable we will wrapp the export of app into a observer */}
+    <Button content="Add Exclaimation"  onClick={activityStore.setTitle} positive/>
   <ActivityDashboard
     activities={activities}
     selectedActivity={selectedActivity}
@@ -135,4 +138,4 @@ if(loading) return <LoadingComponent content='Loading App' />
   );
 }
 
-export default App;
+export default observer(App);
