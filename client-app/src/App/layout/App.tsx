@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import './styles.css';
 
-import { Button, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
@@ -17,7 +17,6 @@ function App() {
 const [activities,setActivities ]=useState<IActivity[]>([]);
 const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
 const [editMode,setEditMode]=useState(false);
-const[loading,setLoading]=useState(true);
 const [submitting,setSubmitting]=useState(false);
 
 function handleSelectActivity(id :string)
@@ -85,29 +84,9 @@ function handleDeleteActivity(id:string)
 
 useEffect(
   ()=>
-  {
-   agent.Activities.list().then
-    (
-      response=>
-      {
-        let activities:IActivity[]=[];
-        response.forEach(activity=>
-          {
-            activity.date=activity.date.split('T')[0];
-            activities.push(activity);
-          }
-          );
-        
-        setActivities(activities); 
-        setLoading(false);
-
-      }
-    );
-
-  } ,
-  []
-);
-if(loading) return <LoadingComponent content='Loading App' />
+  {activityStore.loadActivities();},[activityStore]
+  );
+if(activityStore.loadingInitial) return <LoadingComponent content='Loading App' />
 
   return (
     // can also use <> instead of fragment
@@ -115,11 +94,9 @@ if(loading) return <LoadingComponent content='Loading App' />
 
   <NavBar openForm={handleFormOpen} />
   <Container style={{marginTop: "10em"}}>
-    <h2>{activityStore.title}</h2>
-    {/* // to make the below observable we will wrapp the export of app into a observer */}
-    <Button content="Add Exclaimation"  onClick={activityStore.setTitle} positive/>
+    
   <ActivityDashboard
-    activities={activities}
+    activities={activityStore.activities}
     selectedActivity={selectedActivity}
     selectActivity={handleSelectActivity}
     cancelSelectActivity={handleCancelSelectActivity}
