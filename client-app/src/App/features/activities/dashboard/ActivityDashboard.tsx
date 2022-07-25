@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
@@ -12,7 +13,7 @@ interface Props{
     DeleteActivity:(id:string)=>void;
     submitting:boolean
 }
-export default function ActivityDashboard({activities,CreateOrEdit,DeleteActivity, submitting
+export default observer( function ActivityDashboard({activities,CreateOrEdit,DeleteActivity, submitting
 }:Props )
 
 {
@@ -40,4 +41,4 @@ export default function ActivityDashboard({activities,CreateOrEdit,DeleteActivit
         </Grid>
     );
 
-}
+})
