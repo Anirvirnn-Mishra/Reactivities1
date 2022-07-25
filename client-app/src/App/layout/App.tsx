@@ -19,28 +19,6 @@ const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(unde
 const [editMode,setEditMode]=useState(false);
 const [submitting,setSubmitting]=useState(false);
 
-function handleSelectActivity(id :string)
-{
-  setSelectedActivity(activities.find(c=>c.id===id));
-
-}
-function handleCancelSelectActivity()
-{ 
-  setSelectedActivity(undefined);
-
-}
-
-// form
-function  handleFormOpen(id?:string)
-{
-id?handleSelectActivity(id):handleCancelSelectActivity(); 
-setEditMode(true);
-
-}
-function handleFormClose()
-{
-  setEditMode(false);
-}
 function handleCreateOrEditActivity(activity:IActivity)
 {
   setSubmitting(true);
@@ -92,18 +70,12 @@ if(activityStore.loadingInitial) return <LoadingComponent content='Loading App' 
     // can also use <> instead of fragment
     <Fragment > 
 
-  <NavBar openForm={handleFormOpen} />
+  <NavBar />
   <Container style={{marginTop: "10em"}}>
     
   <ActivityDashboard
     activities={activityStore.activities}
-    selectedActivity={selectedActivity}
-    selectActivity={handleSelectActivity}
-    cancelSelectActivity={handleCancelSelectActivity}
-    editMode={editMode}
-    openForm={handleFormOpen}
-    closeForm={handleFormClose}
-    CreateOrEdit={handleCreateOrEditActivity}
+     CreateOrEdit={handleCreateOrEditActivity}
     DeleteActivity={handleDeleteActivity}
     submitting={submitting}
     />
