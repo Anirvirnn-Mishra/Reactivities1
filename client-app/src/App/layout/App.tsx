@@ -1,11 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './styles.css';
 
 import { Container } from 'semantic-ui-react';
-import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
-import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
 import {  useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
@@ -13,8 +11,6 @@ import { observer } from 'mobx-react-lite';
 
 function App() {
    const {activityStore}=useStore();
-const [activities,setActivities ]=useState<IActivity[]>([]);
-const [submitting,setSubmitting]=useState(false);
 
 // function handleCreateOrEditActivity(activity:IActivity)
 // {
@@ -49,13 +45,7 @@ const [submitting,setSubmitting]=useState(false);
 // // setEditMode(false);
 // // setSelectedActivity(activity);
 // }
-function handleDeleteActivity(id:string)
-{
-  setSubmitting(true);
-  agent.Activities.delete(id).then(()=>{setActivities([...activities.filter(x=>x.id!==id)]); setSubmitting(false)});
-  
 
-}
 
 useEffect(
   ()=>
@@ -71,9 +61,6 @@ if(activityStore.loadingInitial) return <LoadingComponent content='Loading App' 
   <Container style={{marginTop: "10em"}}>
     
   <ActivityDashboard
-    activities={activityStore.activities}
-    DeleteActivity={handleDeleteActivity}
-    submitting={submitting}
     />
   </Container>
       

@@ -19,7 +19,7 @@ export default class ActivityStore
         this.SetloadingInitial(true);
         try{
             const activities= await agent.Activities.list();
-
+           runInAction(()=>{ this.activities=[];})
                 activities.forEach(activity=>
                     {
                       activity.date=activity.date.split('T')[0];
@@ -99,6 +99,23 @@ export default class ActivityStore
       console.log(error);
       runInAction(()=>{this.loading=false;})
 
+    }
+  }
+  deleteActivity=async (id:string)=>{
+    
+    this.loading=true;
+    try {
+      await agent.Activities.delete(id);
+      runInAction(()=>{
+        this.activities=[...this.activities.filter(x=>x.id!==id)];
+        if(this.selectedActivity?.id===id)this.CancelSelectedActivity();
+        this.loading=false;
+        
+      })
+    } catch (error) {
+      console.log(error);
+      this.loading=false;
+      
     }
   }
   

@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Button, Card,  Image } from "semantic-ui-react";
 import LoadingComponent from "../../../layout/LoadingComponents";
@@ -5,7 +6,7 @@ import { IActivity } from "../../../models/activity";
 import { useStore } from "../../../stores/store";
 
 
-export default function ActivityDetails() {
+export default observer( function ActivityDetails() {
     const {activityStore}= useStore();
     const {selectedActivity:activity,openForm,CancelSelectedActivity}=activityStore;
     if(!activity)return <LoadingComponent />;
@@ -29,4 +30,4 @@ export default function ActivityDetails() {
             </Card.Content>
         </Card>
     );
-}
+})
