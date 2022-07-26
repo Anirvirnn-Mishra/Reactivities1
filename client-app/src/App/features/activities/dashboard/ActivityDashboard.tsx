@@ -9,11 +9,10 @@ import ActivityList from "./ActivityList";
 
 interface Props{
     activities:IActivity[];
-    CreateOrEdit:(activity:IActivity)=>void;
     DeleteActivity:(id:string)=>void;
     submitting:boolean
 }
-export default observer( function ActivityDashboard({activities,CreateOrEdit,DeleteActivity, submitting
+export default observer( function ActivityDashboard({activities,DeleteActivity, submitting
 }:Props )
 
 {
@@ -33,8 +32,6 @@ export default observer( function ActivityDashboard({activities,CreateOrEdit,Del
                  {editMode
                  &&
                     <ActivityForm 
-                CreateOrEdit={CreateOrEdit} 
-                submitting={submitting}
                     />}
 
             </Grid.Column>

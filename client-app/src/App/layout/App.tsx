@@ -5,7 +5,6 @@ import { Container } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../features/activities/dashboard/ActivityDashboard';
-import {v4 as uuid} from 'uuid';
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponents';
 import {  useStore } from '../stores/store';
@@ -15,43 +14,41 @@ import { observer } from 'mobx-react-lite';
 function App() {
    const {activityStore}=useStore();
 const [activities,setActivities ]=useState<IActivity[]>([]);
-const [selectedActivity,setSelectedActivity]=useState<IActivity| undefined>(undefined);
-const [editMode,setEditMode]=useState(false);
 const [submitting,setSubmitting]=useState(false);
 
-function handleCreateOrEditActivity(activity:IActivity)
-{
-  setSubmitting(true);
-  if(activity.id)
-  {
-    agent.Activities.update(activity).then
-    (()=>
-      {
-        setActivities([...activities.filter(c=>c.id!==activity.id),activity]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-      }
-    );
-  }
-  else
-  {
-    activity.id=uuid();
-    agent.Activities.create(activity).then(
-      ()=>
-      {
-        setActivities([...activities,activity]);
-        setSelectedActivity(activity);
-        setEditMode(false);
-        setSubmitting(false);
-    }
-    );
-  }
-// activity.id?setActivities([...activities.filter(c=>c.id!==activity.id),activity]):
-// setActivities([...activities,{...activity,id:uuid()}]);
-// setEditMode(false);
-// setSelectedActivity(activity);
-}
+// function handleCreateOrEditActivity(activity:IActivity)
+// {
+//   setSubmitting(true);
+//   if(activity.id)
+//   {
+//     agent.Activities.update(activity).then
+//     (()=>
+//       {
+//         setActivities([...activities.filter(c=>c.id!==activity.id),activity]);
+//         setSelectedActivity(activity);
+//         setEditMode(false);
+//         setSubmitting(false);
+//       }
+//     );
+//   }
+//   else
+//   {
+//     activity.id=uuid();
+//     agent.Activities.create(activity).then(
+//       ()=>
+//       {
+//         setActivities([...activities,activity]);
+//         setSelectedActivity(activity);
+//         setEditMode(false);
+//         setSubmitting(false);
+//     }
+//     );
+//   }
+// // activity.id?setActivities([...activities.filter(c=>c.id!==activity.id),activity]):
+// // setActivities([...activities,{...activity,id:uuid()}]);
+// // setEditMode(false);
+// // setSelectedActivity(activity);
+// }
 function handleDeleteActivity(id:string)
 {
   setSubmitting(true);
@@ -75,7 +72,6 @@ if(activityStore.loadingInitial) return <LoadingComponent content='Loading App' 
     
   <ActivityDashboard
     activities={activityStore.activities}
-     CreateOrEdit={handleCreateOrEditActivity}
     DeleteActivity={handleDeleteActivity}
     submitting={submitting}
     />
