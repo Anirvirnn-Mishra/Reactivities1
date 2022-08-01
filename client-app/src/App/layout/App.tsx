@@ -7,6 +7,8 @@ import ActivityDashboard from '../features/activities/dashboard/ActivityDashboar
 import LoadingComponent from './LoadingComponents';
 import {  useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
+import { Route } from 'react-router-dom';
+import HomePage from '../features/home/HomePage';
 // without mobx
 
 function App() {
@@ -59,9 +61,10 @@ if(activityStore.loadingInitial) return <LoadingComponent content='Loading App' 
 
   <NavBar />
   <Container style={{marginTop: "10em"}}>
-    
-  <ActivityDashboard
-    />
+  <Route path={'/'} component={HomePage}/>
+  <Route path={'/activities'} component={HomePage}/>
+  <Route path={'/createActivity'} component={HomePage}/>
+  
   </Container>
       
   
