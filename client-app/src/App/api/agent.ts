@@ -5,7 +5,7 @@ import { IActivity } from "../models/activity";
 const sleep=(delay:number)=>{
     return new Promise((resolve)=>{setTimeout(resolve,delay)});
 }
-axios.defaults.baseURL="https:localhost:5001/api/";
+axios.defaults.baseURL="https://localhost:5001/api/";
 axios.interceptors.response.use(
     async response =>
      {
